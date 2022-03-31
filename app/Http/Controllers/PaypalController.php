@@ -21,8 +21,8 @@ class PaypalController extends Controller
             "purchase_units" => [
                 0 => [
                     "amount" => [
-                        "currency_code" => "USD",
-                        "value" => "100.00"
+                        "currency_code" => env('PAYPAL_CURRENCY'),
+                        "value" => env('APP_PRICE')
                     ]
                 ]
             ]
@@ -55,7 +55,7 @@ class PaypalController extends Controller
 
         dd($response); // All response
 
-        if (isset($response['status']) && $response['status'] == 'COMPLETED') {
+        if (isset($response['status']) && $response['status'] != null && $response['status'] == 'COMPLETED') {
             // Save needed data to database //
 
             return redirect()
